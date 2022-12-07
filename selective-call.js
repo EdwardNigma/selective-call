@@ -1,14 +1,15 @@
-function debounce (f, ms) {
-    debounce.counter = 0;
-    let start = Date.now();
-    return function () {
-        let end = Date.now();
-        if (((end - start) >= ms) || (debounce.counter == 0)) { 
-            f.apply(this, arguments);
-            debounce.counter++;
-        }
-        start = end;
-    }
+function debounce(f, ms) {
+    let isCooldown = false;
+    
+    return function() {
+      if (isCooldown) return;
+      
+      f.apply(this, arguments);
+  
+      isCooldown = true;
+  
+      setTimeout(() => isCooldown = false, ms);
+    };
 }
 
 let f = debounce(alert, 1000);
